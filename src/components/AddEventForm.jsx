@@ -69,7 +69,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
                         type="text"
                         {...register('title', { required: true })}
                         placeholder="Event title"
-                        defaultValue={editingEvent !== null ? editingEvent?.title : 'Event title'}
+                        defaultValue={editingEvent !== null ? editingEvent?.title : null}
                         className='lg:text-2xl text-xl font-poppins bg-bg text-primary outline-none focus:border-none'
 
                     />
@@ -91,7 +91,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
                     type="text"
                     {...register('description')}
                     placeholder="event description (optional)"
-                    defaultValue={editingEvent !== null ? editingEvent?.description : 'event description (optional)'}
+                    defaultValue={editingEvent !== null ? editingEvent?.description : null}
                     className='h-20 border-2 border-[#ddd] rounded-lg p-4 outline-none'
                 />
 
