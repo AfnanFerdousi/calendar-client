@@ -11,24 +11,38 @@ import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import { v4 as uuidv4 } from 'uuid';
+import Loader from "./Shared/Loader";
 
-const AddEventForm = ({ setShowNewEventForm }) => {
+const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
     const {
         register,
         handleSubmit } = useForm();
     const dispatch = useDispatch();
     const [time, onChange] = useState('00:00');
+    const [loader, setLoader] = useState(false);
     const createdAt = new Date(); 
     const formattedTime = createdAt.toISOString();
     const uniqueId = uuidv4(); 
+    
 
     // adding the event
     const onSubmit = (data) => {
-        dispatch(addEvent({ ...data, time: time,createdAt: formattedTime, id: uniqueId }));
+        setLoader(true)
+        dispatch(addEvent({
+            ...data,
+            time: time,
+            dateOfEvent: selectedDate.toISOString(),
+            createdAt: formattedTime,
+            id: uniqueId
+        }));
+        setShowNewEventForm(false);
+        setLoader(false)
+
     };
 
     return (
         <div>
+            {loader ? <Loader /> : null}
             <form onSubmit={handleSubmit(onSubmit)} className='border-[2px] border-[#ddd] mt-6 rounded-lg flex flex-col p-4 '>
                 {/* Title input */}
                 <div className='text-2xl font-poppins flex items-center gap-x-4'>

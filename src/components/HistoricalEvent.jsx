@@ -23,7 +23,6 @@ const HistoricalEvent = () => {
        }
        getHistoricalEvent();
    }, [currentDate, month]);
-  console.log(events.slice(0, 5));
 
     return (
         <div className='border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] mt-8 py-6 px-4 h-[70vh] overflow-scroll overflow-x-hidden'>

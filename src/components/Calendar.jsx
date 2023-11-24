@@ -33,7 +33,7 @@ const Calendar = () => {
     const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const firstDayIndex = getDay(startOfCalendar);
-    
+
     return (
         <div className='bg-bg mt-8 border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] py-6'>
             {/* month navigation start */}
@@ -65,7 +65,7 @@ const Calendar = () => {
                                         className={`text-center py-4 rounded-lg cursor-pointer  ${isSameMonth(date, currentDate) ? 'text-primary hover:text-accent hover:text-semibold' : 'text-gray-400'
                                             } ${isToday(date) ? 'bg-secondary font-semibold hover:text-primary' : ''}`}
                                     >
-                                        <Link to={`/day/${format(currentDate, 'yyyy-MM-dd')}`}>  {index >= firstDayIndex && index < firstDayIndex + daysInCalendar.length
+                                        <Link to={`/day/${format(date, 'yyyy-MM-dd')}`}>  {index >= firstDayIndex && index < firstDayIndex + daysInCalendar.length
                                             ? format(date, 'd')
                                             : ''}</Link>
                                     </td>
