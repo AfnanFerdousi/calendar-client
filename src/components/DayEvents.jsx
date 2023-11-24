@@ -93,6 +93,7 @@ const DayEvents = () => {
                     setShowNewEventForm={setShowNewEventForm}
                     selectedDate={selectedDate}
                     editingEvent={editingEvent}
+                    setEditingEvent={setEditingEvent}
                     setEdit={setEdit}
                 />}
 

@@ -13,7 +13,7 @@ import 'react-clock/dist/Clock.css';
 import { v4 as uuidv4 } from 'uuid';
 import Loader from "./Shared/Loader";
 
-const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit }) => {
+const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEditingEvent, setEdit }) => {
     const {
         register,
         handleSubmit } = useForm();
@@ -47,6 +47,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
                 updatedAt: formattedTime,
                 time: time, 
             }));
+            setEditingEvent(null)
             setEdit(false);
         }
         setShowNewEventForm(false);

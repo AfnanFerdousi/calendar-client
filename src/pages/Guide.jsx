@@ -1,7 +1,9 @@
+import UsageGuide from "../components/UsageGuide";
+
 const Guide = () => {
     return (
-        <div>
-            
+        <div className="lg:md:px-12 px-6" data-aos="fade-up">
+            <UsageGuide/>            
         </div>
     );
 };

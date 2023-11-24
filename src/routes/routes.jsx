@@ -3,6 +3,7 @@ import App from '../App';
 import NotFound from '../pages/NotFound';
 import Home from '../pages/Home';
 import Events from '../pages/Events';
+import Guide from '../pages/Guide';
 
 const routes = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ const routes = createBrowserRouter([
             {
                 path: "/day/:date",
                 element: <Events/>,
+            },
+            {
+                path: '/guide',
+                element: <Guide/>
             }
         ]
     },
