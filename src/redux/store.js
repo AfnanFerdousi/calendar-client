@@ -1,10 +1,10 @@
-import { createStore, combineReducers } from 'redux';
-// import eventsReducer from './reducers/events';
+import { configureStore } from '@reduxjs/toolkit';
+import eventsReducer from './reducers/eventsReducer';
 
-const rootReducer = combineReducers({
-    // events: eventsReducer,
+const store = configureStore({
+    reducer: {
+        events: eventsReducer,
+    },
 });
-
-const store = createStore(rootReducer);
 
 export default store;

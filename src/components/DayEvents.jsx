@@ -8,10 +8,31 @@ import { IoMdTime } from "react-icons/io";
 import { IoAdd } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
+import { useState } from 'react';
+import {useForm} from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { addEvent } from '../redux/actions/eventsActions';
 
 const DayEvents = () => {
     const currentDate = startOfMonth(new Date());
     const formattedDate = format(currentDate, "EEEE dd MMMM, h:mm a");
+    const {
+        register,
+        handleSubmit } = useForm();
+    const dispatch = useDispatch();
+    const events = useSelector(state => state.events);
+    const [showNewEventForm, setShowNewEventForm] = useState(false);
+
+    const handleNewEventClick = () => {
+        setShowNewEventForm(true);
+    };
+    const onSubmit = (data) => {
+        // Dispatch action to store the new event in Redux
+        dispatch(addEvent(data));
+    };
+
+    console.log(events)
+    console.log(showNewEventForm)
     return (
         <div className="bg-bg mt-8 border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] py-6 px-4">
             <p className='font-poppins text-lg px-2 mb-3 inline-block border-b-2 border-[#ddd]'>My Events</p>
@@ -36,8 +57,39 @@ const DayEvents = () => {
                     </div>
                 </div>
                 {/* events end */}
+
+                {/* add new event */}
+                {showNewEventForm && (
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        {/* Title input */}
+                        <input
+                            type="text"
+                            {...register('title')}
+                            placeholder="Title"
+                        />
+
+                        {/* Event Time input */}
+                        <input
+                            type="text"
+                            {...register('time')}
+                            placeholder="Event Time"
+                        />
+
+                        {/* Event Description input */}
+                        <textarea
+                            type="text"
+                            {...register('description')}
+                            placeholder="Event Description (optional)"
+                        />
+
+                        {/* Submit button */}
+                        <button type="submit">Submit</button>
+                    </form> 
+                )}
                 <div>
-                    <button className='flex items-center font-medium text-xl text-primary gap-x-2 mt-2'><IoAdd /> New event</button>
+                    <button
+                        onClick={handleNewEventClick}
+                        className='flex items-center font-medium text-xl text-primary gap-x-2 mt-2'><IoAdd /> New event</button>
                 </div>
 
           </div>
