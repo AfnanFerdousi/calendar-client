@@ -9,26 +9,18 @@ import { IoAdd } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { useState } from 'react';
-import {useForm} from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { addEvent } from '../redux/actions/eventsActions';
+import { useSelector } from 'react-redux';
+import AddEventForm from './AddEventForm';
+
 
 const DayEvents = () => {
     const currentDate = startOfMonth(new Date());
     const formattedDate = format(currentDate, "EEEE dd MMMM, h:mm a");
-    const {
-        register,
-        handleSubmit } = useForm();
-    const dispatch = useDispatch();
     const events = useSelector(state => state.events);
-    const [showNewEventForm, setShowNewEventForm] = useState(false);
+    const [showNewEventForm, setShowNewEventForm] = useState(true);
 
     const handleNewEventClick = () => {
         setShowNewEventForm(true);
-    };
-    const onSubmit = (data) => {
-        // Dispatch action to store the new event in Redux
-        dispatch(addEvent(data));
     };
 
     console.log(events)
@@ -50,8 +42,8 @@ const DayEvents = () => {
                             <h4 className='text-md text-gray-500 font-poppins'>created at: {formattedDate}</h4>
                             <h2 className='mt-4 text-md font-poppins text-lg text-primary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum asperiores voluptatum doloribus quo at illum consectetur earum, deleniti quaerat numquam sint molestias soluta, unde explicabo magni. Nostrum laudantium magnam blanditiis obcaecati tempora ad, nobis quam, est excepturi nemo minus laborum?</h2>
                             <div className='flex items-center justify-end gap-x-4'>
-                                <button className='text-3xl text-green-600'><CiEdit /></button>
-                                <button className='text-3xl text-red-600'><MdDeleteOutline /></button>
+                                <button className='text-4xl text-yellow-600'><CiEdit /></button>
+                                <button className='text-4xl text-red-600'><MdDeleteOutline /></button>
                             </div>
                         </div>
                     </div>
@@ -59,40 +51,15 @@ const DayEvents = () => {
                 {/* events end */}
 
                 {/* add new event */}
-                {showNewEventForm && (
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* Title input */}
-                        <input
-                            type="text"
-                            {...register('title')}
-                            placeholder="Title"
-                        />
+                {showNewEventForm && <AddEventForm setShowNewEventForm={setShowNewEventForm} />}
 
-                        {/* Event Time input */}
-                        <input
-                            type="text"
-                            {...register('time')}
-                            placeholder="Event Time"
-                        />
-
-                        {/* Event Description input */}
-                        <textarea
-                            type="text"
-                            {...register('description')}
-                            placeholder="Event Description (optional)"
-                        />
-
-                        {/* Submit button */}
-                        <button type="submit">Submit</button>
-                    </form> 
-                )}
                 <div>
                     <button
                         onClick={handleNewEventClick}
                         className='flex items-center font-medium text-xl text-primary gap-x-2 mt-2'><IoAdd /> New event</button>
                 </div>
 
-          </div>
+            </div>
         </div>
     );
 };

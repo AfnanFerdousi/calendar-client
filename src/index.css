@@ -16,6 +16,10 @@
   background-color: #edf2f7; /* Set the color of the scrollbar track */
 }
 
+.react-time-picker__wrapper{
+  border: none !important;
+  color: #b4acc3;
+}
 
 body{
   font-family: 'Caveat', cursive;
