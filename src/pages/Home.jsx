@@ -3,11 +3,11 @@ import HistoricalEvent from "../components/HistoricalEvent";
 
 const Home = () => {
     return (
-        <div className="lg:md:px-12 grid grid-cols-3 gap-4">
-            <div className="col-span-2" data-aos="fade-right">
+        <div className="lg:md:px-12 px-6 md:grid md:grid-cols-3 gap-4">
+            <div className="md:col-span-2" data-aos="fade-right">
                 <Calendar />
             </div>
-            <div className="col-span-1" data-aos="fade-left">
+            <div className="md:col-span-1" data-aos="fade-left">
                 <HistoricalEvent/>
 
             </div>

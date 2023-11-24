@@ -62,21 +62,21 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
             {loader ? <Loader /> : null}
             <form onSubmit={handleSubmit(onSubmit)} className='border-[2px] border-[#ddd] mt-6 rounded-lg flex flex-col p-4 '>
                 {/* Title input */}
-                <div className='text-2xl font-poppins flex items-center gap-x-4'>
-                    <TfiNotepad className=' text-3xl' />
+                <div className='lg:text-2xl text-xl font-poppins flex items-center md:gap-x-4 gap-x-2'>
+                    <TfiNotepad className='lg:text-3xl md:text-2xl text-xl' />
                     <input
                         type="text"
                         {...register('title', { required: true })}
                         placeholder="Event title"
                         defaultValue={editingEvent !== null ? editingEvent?.title : 'Event title'}
-                        className='text-2xl font-poppins bg-bg text-primary outline-none focus:border-none'
+                        className='lg:text-2xl text-xl font-poppins bg-bg text-primary outline-none focus:border-none'
 
                     />
                 </div>
 
                 {/* Event Time input */}
-                <div className='text-2xl font-poppins  py-2 pb-4 flex items-center gap-x-4'>
-                    <IoMdTime className='font-semibold text-2xl' />
+                <div className='lg:text-2xl text-xl font-poppins  py-2 pb-4 flex items-center md:gap-x-4 gap-x-2'>
+                    <IoMdTime className='font-semibold md:text-2xl text-xl' />
                     <TimePicker
                         required
                         clockIcon={null}
@@ -96,8 +96,8 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
 
                 {/* Submit button */}
                 <div className='flex items-center justify-end gap-x-4'>
-                    <button type="submit" className='text-4xl text-green-600'><IoCheckmarkSharp /></button>
-                    <button className='text-4xl text-red-600' onClick={() => setShowNewEventForm(false)}><MdDeleteOutline /></button>
+                    <button type="submit" className='lg:text-4xl md:text-3xl text-2xl text-green-600'><IoCheckmarkSharp /></button>
+                    <button className='lg:text-4xl md:text-3xl text-2xl text-red-600' onClick={() => setShowNewEventForm(false)}><MdDeleteOutline /></button>
                 </div>
             </form>
         </div>

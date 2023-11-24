@@ -26,15 +26,15 @@ const HistoricalEvent = () => {
 
     return (
         <div className='border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] mt-8 py-6 px-4 h-[70vh] overflow-scroll overflow-x-hidden'>
-            <h2 className='text-3xl font-caveat font-semibold'>What happened today 😶‍🌫️?</h2>
+            <h2 className='lg:text-3xl md:text-2xl text-2xl font-caveat font-semibold'>What happened today 😶‍🌫️?</h2>
 
             <div>
                 {loader ? <Loader /> : events.slice(0, 5).map((event, index) => (
                     <div key={index} className='mt-6 border-b-2 pb-6'>
                         <div className='flex flex-col items-center font-poppins'>
-                            <h3 className='bg-accent text-bg rounded-full p-6 w-20 text-2xl flex justify-center items-center'><span>{event?.year}</span></h3>
+                            <h3 className='bg-accent text-bg rounded-full lg:p-6 md:p-4 p-4 lg:w-20 w-16 lg:text-2xl md:text-xl text-xl flex justify-center items-center'><span>{event?.year}</span></h3>
                             <p className='text-center text-lg font-semibold mt-2'>Year of event</p>
-                        <h3 className='text-md font-medium text-center mt-4'>{event?.text}</h3>
+                        <h3 className='md:text-md text-[14px] font-medium text-center mt-4'>{event?.text}</h3>
                       </div>
                     </div>                    
                 ))}
