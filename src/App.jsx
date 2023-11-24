@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import MainLayout from "./layouts/MainLayout";
 
-function App() {
 
+const App = () => {
   return (
-    <div>
-      
+    <div className="bg-[#F9F5FF]">
+     <MainLayout />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
