@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
-import { addEvent } from "../redux/actions/eventsActions";
+import { addEvent, editEvent } from "../redux/actions/eventsActions";
 import { TfiNotepad } from "react-icons/tfi";
 import { IoMdTime } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
@@ -13,12 +13,12 @@ import 'react-clock/dist/Clock.css';
 import { v4 as uuidv4 } from 'uuid';
 import Loader from "./Shared/Loader";
 
-const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
+const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit }) => {
     const {
         register,
         handleSubmit } = useForm();
     const dispatch = useDispatch();
-    const [time, onChange] = useState('00:00');
+    const [time, setTime] = useState(editingEvent?.time || '00:00'); 
     const [loader, setLoader] = useState(false);
     const createdAt = new Date(); 
     const formattedTime = createdAt.toISOString();
@@ -28,13 +28,27 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
     // adding the event
     const onSubmit = (data) => {
         setLoader(true)
-        dispatch(addEvent({
-            ...data,
-            time: time,
-            dateOfEvent: selectedDate.toISOString(),
-            createdAt: formattedTime,
-            id: uniqueId
-        }));
+
+        if (editingEvent === null) {
+            // If editingEvent is null, dispatch addEvent
+            dispatch(addEvent({
+                ...data,
+                time: time, 
+                dateOfEvent: selectedDate.toISOString(),
+                createdAt: formattedTime,
+                updatedAt: null,
+                id: uniqueId
+            }));
+        } else {
+            // If editingEvent is not null, dispatch editEvent
+            dispatch(editEvent(editingEvent.id, {
+                ...data,
+                dateOfEvent: selectedDate.toISOString(),
+                updatedAt: formattedTime,
+                time: time, 
+            }));
+            setEdit(false);
+        }
         setShowNewEventForm(false);
         setLoader(false)
 
@@ -51,6 +65,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
                         type="text"
                         {...register('title', { required: true })}
                         placeholder="Event title"
+                        defaultValue={editingEvent !== null && editingEvent?.title}
                         className='text-2xl font-poppins bg-bg text-primary outline-none focus:border-none'
 
                     />
@@ -62,7 +77,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
                     <TimePicker
                         required
                         clockIcon={null}
-                        onChange={onChange}
+                        onChange={setTime}
                         format="h:mm a"
                         amPmAriaLabel="Select AM/PM"
                         value={time} />
@@ -72,6 +87,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate }) => {
                     type="text"
                     {...register('description')}
                     placeholder="event description (optional)"
+                    defaultValue={editingEvent !== null && editingEvent?.description}
                     className='h-20 border-2 border-[#ddd] rounded-lg p-4 outline-none'
                 />
 
