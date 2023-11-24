@@ -1,4 +1,5 @@
 import Calendar from "../components/Calendar";
+import HistoricalEvent from "../components/HistoricalEvent";
 
 const Home = () => {
     return (
@@ -6,7 +7,8 @@ const Home = () => {
             <div className="col-span-2">
                 <Calendar />
             </div>
-            <div>
+            <div className="col-span-1">
+                <HistoricalEvent/>
 
             </div>
         </div>

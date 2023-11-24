@@ -26,22 +26,26 @@ const Calendar = () => {
     };
 
     const startOfCalendar = startOfWeek(startOfMonth(currentDate));
-    const endOfCalendar = endOfWeek(addMonths(startOfCalendar, 5)); // Displaying 6 weeks
+    const endOfCalendar = endOfWeek(addMonths(startOfCalendar, 5)); 
 
     const daysInCalendar = eachDayOfInterval({ start: startOfCalendar, end: endOfCalendar });
 
     const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const firstDayIndex = getDay(startOfCalendar);
+    
     return (
         <div className='bg-bg mt-8 border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] py-6'>
+            {/* month navigation start */}
             <div className='flex justify-center items-center gap-x-6'>
                 <button onClick={prevMonth} className='text-3xl'><IoIosArrowDropleftCircle /></button>
                 <span className="font-caveat text-5xl">{format(currentDate, 'MMMM yyyy')}</span>
                 <button onClick={nextMonth} className='text-3xl'><IoIosArrowDroprightCircle /></button>
             </div>
+            {/* month navigation end */}
 
-            <table className='w-full mt-10'>
+            <table className='w-full mt-10 font-poppins'>
+                {/* showing days of the week */}
                 <thead>
                     <tr>
                         {daysOfTheWeek.map((day) => (
