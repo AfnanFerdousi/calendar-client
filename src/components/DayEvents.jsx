@@ -1,7 +1,10 @@
 
 import {
     format,
-    startOfMonth
+    startOfMonth,
+    parseISO,
+    parse
+
 } from 'date-fns';
 import { TfiNotepad } from "react-icons/tfi";
 import { IoMdTime } from "react-icons/io";
@@ -9,21 +12,20 @@ import { IoAdd } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteOutline } from "react-icons/md";
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
 import AddEventForm from './AddEventForm';
+import Cookies from 'js-cookie';
 
 
 const DayEvents = () => {
     const currentDate = startOfMonth(new Date());
-    const formattedDate = format(currentDate, "EEEE dd MMMM, h:mm a");
-    const events = useSelector(state => state.events);
-    const [showNewEventForm, setShowNewEventForm] = useState(true);
+    const [showNewEventForm, setShowNewEventForm] = useState(false);
 
     const handleNewEventClick = () => {
         setShowNewEventForm(true);
     };
+    const allEvents = Cookies.get('events') ? JSON.parse(Cookies.get('events')) : [];
 
-    console.log(events)
+    console.log(allEvents)
     console.log(showNewEventForm)
     return (
         <div className="bg-bg mt-8 border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] py-6 px-4">
@@ -32,22 +34,32 @@ const DayEvents = () => {
 
             <div>
                 {/* events start */}
-                <div className='border-[2px] border-[#ddd] mt-6 rounded-lg'>
+                {allEvents.length > 0 ? allEvents.map((event, index) => (
+                <div key={index} className='border-[2px] border-[#ddd] mt-6 rounded-lg'>
                     <div className='p-4'>
                         <div className=' flex items-center gap-x-8'>
-                            <h3 className='text-2xl font-poppins flex items-center gap-x-4'><TfiNotepad className=' text-3xl' /> Meeting with Mariya</h3>
-                            <h3 className='text-xl font-caveat  flex items-center'><IoMdTime className='font-semibold text-2xl' />9:00 AM</h3>
+                                <h3 className='text-2xl font-poppins flex items-center gap-x-4'><TfiNotepad className=' text-3xl' /> {event.title}</h3>
+                                {/* showing the event time in a fomatted way */}
+                                <h3 className='text-xl font-caveat  flex items-center'><IoMdTime className='font-semibold text-2xl' />{format(parse(event?.time, 'HH:mm', new Date()), 'h:mm a')}</h3>
                         </div>
-                        <div className=''>
-                            <h4 className='text-md text-gray-500 font-poppins'>created at: {formattedDate}</h4>
-                            <h2 className='mt-4 text-md font-poppins text-lg text-primary'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum asperiores voluptatum doloribus quo at illum consectetur earum, deleniti quaerat numquam sint molestias soluta, unde explicabo magni. Nostrum laudantium magnam blanditiis obcaecati tempora ad, nobis quam, est excepturi nemo minus laborum?</h2>
+                            <div className=''>
+                                {/* showing the created at time in a formatted way */}
+                                <h4 className='text-md text-gray-500 font-poppins mt-2'>created at: {format(parseISO(event?.createdAt), 'dd MMM yyyy, h:mm a')}</h4>
+                                {/* showing the description if it exists */}
+                                {event?.description && <h2 className='mt-4 text-md font-poppins text-lg text-primary'>{event?.description}</h2>}
+
+                                {/* actions */}
                             <div className='flex items-center justify-end gap-x-4'>
                                 <button className='text-4xl text-yellow-600'><CiEdit /></button>
                                 <button className='text-4xl text-red-600'><MdDeleteOutline /></button>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
+                )) : <div className='text-2xl font-poppins flex items-center gap-x-4'>
+                    <TfiNotepad className=' text-3xl' />
+                    <p>No events found</p>
+                </div>}
                 {/* events end */}
 
                 {/* add new event */}

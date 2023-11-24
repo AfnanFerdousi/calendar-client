@@ -10,6 +10,7 @@ import { useState } from "react";
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddEventForm = ({ setShowNewEventForm }) => {
     const {
@@ -19,10 +20,11 @@ const AddEventForm = ({ setShowNewEventForm }) => {
     const [time, onChange] = useState('00:00');
     const createdAt = new Date(); 
     const formattedTime = createdAt.toISOString();
+    const uniqueId = uuidv4(); 
 
     // adding the event
     const onSubmit = (data) => {
-        dispatch(addEvent({ ...data, createdAt: formattedTime }));
+        dispatch(addEvent({ ...data, time: time,createdAt: formattedTime, id: uniqueId }));
     };
 
     return (
@@ -47,6 +49,8 @@ const AddEventForm = ({ setShowNewEventForm }) => {
                         required
                         clockIcon={null}
                         onChange={onChange}
+                        format="h:mm a"
+                        amPmAriaLabel="Select AM/PM"
                         value={time} />
                 </div>
                 {/* Event Description input */}
