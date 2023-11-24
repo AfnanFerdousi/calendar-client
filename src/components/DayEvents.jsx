@@ -14,13 +14,13 @@ import AddEventForm from './AddEventForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteEvent } from '../redux/actions/eventsActions';
 import Loader from './Shared/Loader';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom'; 
 
 const DayEvents = () => {
-    const { date } = useParams();
-    const selectedDate = parseISO(date);
+    const { date } = useParams(); 
+    const selectedDate = parseISO(date); 
     const [showNewEventForm, setShowNewEventForm] = useState(false);
-    const [editingEvent, setEditingEvent] = useState(null);
+    const [editingEvent, setEditingEvent] = useState(null); 
     const [edit, setEdit] = useState(false);
     const dispatch = useDispatch();
     const [loader, setLoader] = useState(false);
@@ -47,7 +47,7 @@ const DayEvents = () => {
         format(parseISO(event?.dateOfEvent), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     );
 
-
+   
     console.log(allEvents)
     console.log(showNewEventForm)
     return (
@@ -59,15 +59,12 @@ const DayEvents = () => {
                 {/* events start */}
                 {loader ? <Loader /> : eventsForSelectedDate.length > 0 ? eventsForSelectedDate.map((event, index) => (
                     <div key={index} className={`border-[2px] border-[#ddd] mt-6 rounded-lg ${edit && 'hidden'}`}>
-                        <div className='p-4'>
-                            <div className=' flex items-center gap-x-8'>
+                    <div className='p-4'>
+                        <div className=' flex items-center gap-x-8'>
                                 <h3 className='text-2xl font-poppins flex items-center gap-x-4'><TfiNotepad className=' text-3xl' /> {event.title}</h3>
                                 {/* showing the event time in a fomatted way */}
-                                <h3 className='text-xl font-caveat  flex items-center'><IoMdTime className='font-semibold text-2xl' />{event?.time
-                                    ? format(parse(event?.time, 'HH:mm', new Date()), 'h:mm a')
-                                    : 'No time available'}
-                                </h3>
-                            </div>
+                                <h3 className='text-xl font-caveat  flex items-center'><IoMdTime className='font-semibold text-2xl' />{format(parse(event?.time, 'HH:mm', new Date()), 'h:mm a')}</h3>
+                        </div>
                             <div className=''>
                                 {/* showing the created at time in a formatted way */}
                                 <h4 className='text-md text-gray-500 font-poppins mt-2'>created at: {format(parseISO(event?.createdAt), 'dd MMM yyyy, h:mm a')}</h4>
@@ -75,15 +72,15 @@ const DayEvents = () => {
                                 {event?.description && <h2 className='mt-4 text-md font-poppins text-lg text-primary'>{event?.description}</h2>}
 
                                 {/* actions */}
-                                <div className='flex items-center justify-end gap-x-4'>
+                            <div className='flex items-center justify-end gap-x-4'>
                                     <button className='text-4xl text-yellow-600' onClick={() => {
                                         setEdit(true)
                                         handleEditClick(event)
                                     }}><CiEdit /></button>
-                                    <button className='text-4xl text-red-600' onClick={() => handleDeleteClick(event.id)}><MdDeleteOutline /></button>
-                                </div>
+                                <button className='text-4xl text-red-600' onClick={() => handleDeleteClick(event.id)}><MdDeleteOutline /></button>
                             </div>
                         </div>
+                    </div>
                     </div>
                 )) : <div className='text-2xl font-poppins flex items-center gap-x-4 my-6'>
                     <TfiNotepad className=' text-3xl' />

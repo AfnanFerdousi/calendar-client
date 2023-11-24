@@ -55,7 +55,10 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
     };
 
     return (
-        <div>
+        <div
+            data-aos="fade-top"
+            data-aos-easing="linear"
+            data-aos-duration="500">
             {loader ? <Loader /> : null}
             <form onSubmit={handleSubmit(onSubmit)} className='border-[2px] border-[#ddd] mt-6 rounded-lg flex flex-col p-4 '>
                 {/* Title input */}
@@ -65,7 +68,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
                         type="text"
                         {...register('title', { required: true })}
                         placeholder="Event title"
-                        defaultValue={editingEvent !== null && editingEvent?.title}
+                        defaultValue={editingEvent !== null ? editingEvent?.title : 'Event title'}
                         className='text-2xl font-poppins bg-bg text-primary outline-none focus:border-none'
 
                     />
@@ -87,7 +90,7 @@ const AddEventForm = ({ setShowNewEventForm, selectedDate, editingEvent, setEdit
                     type="text"
                     {...register('description')}
                     placeholder="event description (optional)"
-                    defaultValue={editingEvent !== null && editingEvent?.description}
+                    defaultValue={editingEvent !== null ? editingEvent?.description : 'event description (optional)'}
                     className='h-20 border-2 border-[#ddd] rounded-lg p-4 outline-none'
                 />
 
