@@ -3,7 +3,6 @@ import {
     format,
     parseISO,
     parse
-
 } from 'date-fns';
 import { TfiNotepad } from "react-icons/tfi";
 import { IoMdTime } from "react-icons/io";
@@ -21,13 +20,18 @@ const DayEvents = () => {
     const { date } = useParams(); 
     const selectedDate = parseISO(date); 
     const [showNewEventForm, setShowNewEventForm] = useState(false);
+    const [editingEvent, setEditingEvent] = useState(null); 
     const dispatch = useDispatch();
     const [loader, setLoader] = useState(false);
 
     const handleNewEventClick = () => {
         setShowNewEventForm(true);
     };
+
+    // getting all the events
     const allEvents = useSelector(state => state.events.events);
+
+    // checking if there is any event in the selected date
     const eventsForSelectedDate = allEvents.filter(event =>
         format(parseISO(event?.dateOfEvent), 'yyyy-MM-dd') === format(selectedDate, 'yyyy-MM-dd')
     );
