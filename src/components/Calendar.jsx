@@ -11,10 +11,14 @@ import {
     isSameMonth,
     isToday,
     getDay,
+    isSameDay,
+    parseISO,
 } from 'date-fns';
 import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
+import { useSelector } from 'react-redux';
 
 const Calendar = () => {
+    const events = useSelector(state => state.events.events);
     const [currentDate, setCurrentDate] = useState(startOfMonth(new Date()));
 
     const nextMonth = () => {
@@ -33,6 +37,12 @@ const Calendar = () => {
     const daysOfTheWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
     const firstDayIndex = getDay(startOfCalendar);
+
+    // to show the events on the calendar
+    const getEventsForDay = (day) => {
+        return events.filter((event) => isSameDay(parseISO(event.dateOfEvent), day));
+    };
+
 
     return (
         <div className='bg-bg mt-8 border-[rgb(153, 143, 199,0.5)] rounded-lg border-[.5px] py-6'>
@@ -62,12 +72,17 @@ const Calendar = () => {
                                 return (
                                     <td
                                         key={date.toString()}
-                                        className={`text-center lg:md:py-4 py-2 rounded-lg cursor-pointer  ${isSameMonth(date, currentDate) ? 'text-primary hover:text-accent hover:text-semibold' : 'text-gray-400'
+                                        className={`lg:w-[150px] md:w-[110px] w-[90px] text-center lg:md:py-4 py-2 rounded-lg cursor-pointer  ${isSameMonth(date, currentDate) ? 'text-primary hover:text-accent hover:text-semibold' : 'text-gray-400'
                                             } ${isToday(date) ? 'bg-secondary font-semibold hover:text-primary' : ''}`}
                                     >
-                                        <Link to={`/day/${format(date, 'yyyy-MM-dd')}`}>  {index >= firstDayIndex && index < firstDayIndex + daysInCalendar.length
-                                            ? format(date, 'd')
-                                            : ''}</Link>
+                                        <Link to={`/day/${format(date, 'yyyy-MM-dd')}`}>
+                                            <h2 className='lg:md:text-[14px] text-sm'>{index >= firstDayIndex && index < firstDayIndex + daysInCalendar.length
+                                                ? format(date, 'd')
+                                                : ''}</h2>
+                                                {getEventsForDay(date).map((event, index) => (
+                                                    <h2 key={index} className="lg:text-[12px] md:text-[10px] text-[8px]  bg-[#c7a6c426] rounded-lg mt-[2px]">{event.title}</h2>
+                                                ))}
+                                        </Link>
                                     </td>
                                 );
                             })}
